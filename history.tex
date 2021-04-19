@@ -1,0 +1,56 @@
+\section{History Expansion}
+
+\textit{History expansion offers advanced techniques, but it is often better to use emacs or vi-style command editing instead.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Event Designators}
+\begin{tabular}{l  l}
+    !       & start hist substitution \\
+    !!      & last command \\
+    !<int>  & <int>th command \\
+    !-<int> & <int>th previous cmd \\
+    !<str>  & most recent cmd with <str> \\
+    !?<str>?    & most recent cmd $\ni$ <str> \\
+    \textasciicircum <s1>\textasciicircum <s2>  & repeat match with subs \\
+\end{tabular}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Word Designators}
+\textit{\say{Word designators} and \say{modifiers} must be separated from \say{event designator} using a colon  (:).}\\
+\begin{tabular}{l  l}
+    0           & zero-th word in a line \\
+    <int>       & <int>th word in a line \\
+    \textasciicircum & first argument in a line \\
+    \$          & last arg in a line \\
+    \%          & match of most recent search \\
+    <int>-<int> & range of words \\
+    *           & all words but the first \\
+    <int>*      & equivalent to <int>-\$ \\
+    <int>-      & words from <int> to penult. \\
+\end{tabular}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Modifiers}
+\begin{tabular}{l  l}
+    h       & remove pathname, leaving head \\ 
+    r       & remove trailing suffix \\ 
+    e       & remove all but suffix \\ 
+    t       & remove leading path (tail remains) \\ 
+    p       & only print resulting command \\ 
+    q       & quote the substituted words \\ 
+    x       & ibid, breaking into words \\ 
+    <sed>   & <sed> substitution (\code{s/old/new/}) \\ 
+\end{tabular}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Examples}
+
+
+\entry{35mm}{!2048:p}{print 2048th cmd}\\
+\entry{35mm}{!!:0 newarg}{last cmd, new args}\\
+

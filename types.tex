@@ -1,0 +1,105 @@
+\section{Types}
+
+\textit{Similarly-named commands are first taken to be aliases, then keywords, functions, \say{built-ins}, and finally scripts, in that order. Override this precedence with: }\textbf{builtin} \textit{ or } \textbf{command}, \textit{ or by disabling higher-precedent commands with }\textbf{enable -n}\textit{. Use }\textbf{declare [afFirx]}\textit{ to set a type explicitly, otherwise type string is assumed. Use }\textbf{type [afptP]}\textit{ to ascertain typing information about a variable.}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Variables}
+
+\textit{Subshells inherit environment variables only; all others remain local to invoking shell. Variables are assumed global unless declared otherwise.}\\
+\entry{35mm}{myvar=\textquotedbl 12345\textquotedbl}{basic assignment}\\
+\entry{35mm}{source myvar}{promotn to envmt}\\
+\entry{35mm}{local mylocvar}{local to a func}\\
+\entry{35mm}{echo \$myvar}{regurgitate}\\
+\entry{35mm}{echo \textquotedbl\$myvar\textquotedbl}{more correct!}\\
+\entry{35mm}{echo \textquotedbl \$\{myvar\}\textquotedbl}{the above does this}\\
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Functions}
+
+\entry{30mm}{function myfunc1}{syntax 1}\\
+\entry{30mm}{\{ }{} \\
+\entry{30mm}{\quad\dots }{statements} \\
+\entry{30mm}{\} }{} \\
+
+\entry{30mm}{myfunc ( ) }{syntax 2}\\
+\entry{30mm}{declare -f}{list all funcs}\\
+
+\textit{Invoke a function like a command, passing args right afterward. When doing so, positional params (}\texttt{\$1}\textit{, \dots ) will reflect args passed to the function.}\\
+%\code{myfunc myarg}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Strings}
+
+\textit{\say{String expansion} is the dereferencing of a variable (assumed a string), per }\textbf{echo \$<var>}\textit{ syntax above. \say{String operators} afford handling of strings, including default values and error messages:}
+{\footnotesize \begin{itemize}[leftmargin=*,label=-]
+    \item \code{\$\{<var>:-<word>\}} \dots <var> ? <var> : <word>
+    \item \code{\$\{<var>:=<word>\}} \dots above, plus set var=word
+    \item \code{\$\{<var>:?<msg>\}} \dots <var> ? <var> : abort
+    \item \code{\$\{<var>:+<word>\}} \dots <var> ? <word> : NULL
+    \item \code{\$\{<var>:<offset>\}} \dots substring expansion
+    \item \code{\$\{<var>:<offset>:<len>\}} \dots ibid
+\end{itemize}}
+\vspace{2mm}
+
+\textit{A class of string operators use \say{pattern matching}, which allows for quick (though syntactically obscure) manipulation of string contents:}
+{\footnotesize \begin{itemize}[leftmargin=*,label=-]
+    \item \code{\$\{<var>\#<ptrn>\}} \dots delete shortest match
+    \item \code{\$\{<var>\#\#<ptrn>\}} \dots delete longest match
+    \item \code{\$\{<var>\%<ptrn>\}} \dots delete shortest match
+    \item \code{\$\{<var>\%\%<ptrn>\}} \dots delete longest match
+    \item \code{\$\{<var>/<ptrn>/<str>\}} \dots sub 1st <p> with <s>
+    \item \code{\$\{<var>//<ptrn>/<str>\}} \dots sub \ul{all} <p> with <s>
+\end{itemize}}
+\vspace{2mm}
+
+\textit{Common pattern-matching idioms:}\\
+\entry{35mm}{\$(path\#\#/*/ )}{only filename} \\
+\entry{35mm}{\$(path\#/*/)}{strip 1st dir} \\
+\entry{35mm}{\$(path)}{full path \& file} \\
+\entry{35mm}{\$(path\%.*)}{strip last extension} \\
+\entry{35mm}{\$(path\%\%.*)}{strip all .* extens\textquotesingle s} \\
+
+\textit{Output using }\href{https://linuxhint.com/bash_echo/}{\textbf{echo}}\textit{ or }\href{https://linuxize.com/post/bash-printf-command/}{\textbf{printf}}\textit{ (advanced), eg:}\\
+\entry{35mm}{echo -en \textquotedbl hello\textbackslash t world\textquotedbl}{note: \href{https://www.tecmint.com/echo-command-in-linux/}{echo optns}} \\
+\entry{35mm}{printf \textquotedbl |\%10s|\textbackslash n\textquotedbl\, hello}{works \href{https://alvinalexander.com/programming/printf-format-cheat-sheet/}{like C versn}} \\
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Numerics}
+\textit{\say{Numeric expansion} is indicated by }\texttt{\$(( <expr> ))}\textit{ syntax, where }\texttt{<expr>}\textit{ allows a wide range of simple mathmatical expressions.}\\
+\entry{35mm}{\$(( 365 - \$(date +\%j) ))}{wks to new year \Smiley}\\
+\entry{45mm}{[ \textbackslash ( 2 -gt 2\textbackslash) \&\& \textbackslash ( 4 -le 1 \textbackslash) ]}{good}\\
+\entry{45mm}{[ \$(( (3 > 2) \&\& (4 <= 1) )) = 1 ]}{better}\\
+\entry{45mm}{(( (3 > 2) \&\& (4 <= 1) ))}{best}\\
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Arrays}
+
+\entry{40mm}{names[2]=alice}{indexed assign}\\
+\entry{40mm}{names=([2]=alice [0]=bob)}{compound asgn}\\
+\entry{40mm}{names=(bob \textquotesingle\textquotesingle\, alice)}{ibid}\\
+\entry{40mm}{declare -a myarr}{empty array}\\
+\entry{40mm}{for i in \textquotedbl \$\{names[@]\}\textquotedbl}{@ $\to$ \say{all}}\\
+\entry{40mm}{\textquotedbl \$\{!names[@]\}\textquotedbl}{print all indices}\\
+\entry{40mm}{\textquotedbl \$\{\#names[@]\}\textquotedbl}{array length}\\
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Command Substitution}
+\entry{35mm}{\$(<command> <arg>*)}{syntax}\\[2mm]
+\textit{\say{Command substitution} expands the results of a called command into a string, eg:}\\
+\entry{35mm}{\$(ls \$HOME)}{contents of \textasciitilde /}\\
+\entry{35mm}{cd \$(DIR\_STACK\%\% *)}{what popd does}\\
+
+
+
+
+
+
+

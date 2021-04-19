@@ -1,0 +1,133 @@
+\section{Environment}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Environment Files}
+
+
+\textit{Several files control shell settings:}\\
+\begin{tabular}{l l}
+    /etc/profile                    & system settings \\
+    \textasciitilde /.bash\_profile & user settings, read @ \ul{login} \\
+    \textasciitilde /.bash\_login   & synonym for ibid \\
+    \textasciitilde /.profile       & synonym for ibid \\
+    \textasciitilde /.bashrc        & read @ \ul{subshell init} \\
+    \textasciitilde /.bash\_logout  & read @ shell logout \\
+\end{tabular}
+
+\textit{Given the difference of when they are read, it is considered best practice to minimize the contents of }\texttt{.bash\_profile}\textit{ to commands that write to console; instead, putting most definitions / aliases / etc into }\texttt{.bashrc}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Aliases}
+
+\entry{35mm}{alias name=command}{alias syntax}\\
+
+\textit{Inspiration:}\\
+\entry{40mm}{alias cdprj=\textquotesingle cd \textasciitilde /Projects/\textquotesingle}{alias syntax}\\
+\entry{40mm}{alias ls=\textquotesingle ls -l\textquotesingle}{recursion is ok!}\\
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Options}
+
+\textit{Options for }\textbf{set}; \textit{set/unset like:}\\
+\code{set -o <opt>; \quad set +o <opt>}\\
+\vspace{-7mm}
+{\footnotesize \begin{multicols*}{4}
+    \ul{a}llexport \\
+    \ul{B}raceexp\textquotesingle nd \\
+    notify (\ul{b}) \\
+    no\ul{C}lobber \\
+    \ul{e}rrexit \\
+    emacs \\
+    noglob (\ul{f}) \\
+    \ul{H}istexp\textquotesingle nd \\
+    history \\
+    \ul{h}ashall \\
+    ignoreeof \\
+    \ul{k}eyword \\
+    \ul{m}onitor \\
+    \ul{n}oexec \\
+    \ul{P}hysical \\
+    \ul{p}rivileged \\
+    posix \\
+    onecmd (\ul{t}) \\
+    no\ul{u}nset \\
+    \ul{v}erbose \\
+    vi \\
+    \ul{x}trace \\
+    - \\
+\end{multicols*}}
+
+
+\textit{Options for }\textbf{shopt}; \textit{ set/unset like}:\\
+\code{shopt -s<arg>; \quad shopt -u<arg>}\\
+
+\vspace{-3mm} %%% a (potentially buggy) multicols kludge!!
+{\footnotesize \begin{multicols*}{4}
+    cdable\_vars \\
+    cdspell \\
+    checkhash \\
+    ch\textquotesingle ckw\textquotesingle nsize \\
+    cmdhist \\
+    dotglob \\
+    execfail \\
+    exp\textquotesingle d\_aliases \\
+    histappend \\
+    histverify \\
+    hostc\textquotesingle mplete \\
+    int.\_c\textquotesingle mnts \\
+    lithist \\
+    mailwarn \\
+    nullglob \\
+    pr\textquotesingle mptvars \\
+    shift\_vrb\textquotesingle se \\
+    sourcepath \\
+\end{multicols*}}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Environment Variables}
+{\bf export}{\it\ promotes a simple variable into an environment variable, to be inherited by all subshells.}
+\vspace{-3mm}
+{\footnotesize \begin{multicols*}{4}
+    \textbf{*} \\    \textbf{@} \\    \textbf{\#} \\   \_ \\   ? \\    \_ \\   \$ \\   ! \\
+    0 \\    BASH \\ BASH\_ENV \\    BASH\_VS\textquotesingle N \\    \textbf{CDPATH} \\   
+    \textbf{DIRSTACK} \\     EUID \\     FCEDIT \\   FIGNORE \\  GL\textquotesingle BLIGN\textquotesingle R \\
+    GROUPS \\   IFS \\  HISTCMD \\  HISTCTL. \\  HISTFILE \\
+    HISTF.SIZE \\   \textbf{HOME} \\     HOSTFILE \\     HOSTNAME \\ HOSTTYPE \\
+    IGNOREEOF \\    \textbf{INPUTRC} \\  LANG \\ LC\_ALL \\  LC\_COLL\textquotesingle G \\
+    LC\_M\textquotesingle SGS \\ LINENO \\   MACHTYPE \\ MAIL \\ MAILCH\textquotesingle CK \\    
+    MAILPATH \\ OLDPWD \\  \textbf{OPTARG} \\   OPTERR \\   \textbf{OPTIND} \\   OSTYPE \\
+    PATH \\ PIPESTAT\textquotesingle \\   P\textquotesingle MPT\_C\textquotesingle MD \\  \textbf{PS1} \\  PS2 \\  PS3 \\  
+    PS4 \\  PPID \\ \textbf{PWD} \\  RANDOM \\   REPLY \\    SECONDS \\  \textbf{SHELL} \\
+    \textbf{SHELLOPTS} \\    SHLVL \\    TIMEF\textquotesingle MT \\   TMOUT \\    UID \\ 
+    auto\_resume \\ histchars
+\end{multicols*}}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Directory Search Path}
+
+\texttt{CDPATH}\textit{ gives shell a list of places to look for the location of the argument to }\textbf{cd}\textit{, eg:}\\
+\code{CDPATH=:\textasciitilde /Projects/}\\
+\textit{Alternatively, run }\textbf{shopt -o cdable\_vars}\textit{ and then define \say{cdable} aliases a la:}\\
+\entry{40mm}{cs=\textasciitilde /Projects/cheatsheets/}{set normal var}\\
+\entry{25mm}{cd cs}{$\Delta$s dir accordingly}\\
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Prompt String}
+
+\textit{Prompt can be customized to indicate current directory, date, shell name, and other information. $\exists$ 4 different prompt variables: }\texttt{PS1}, \texttt{PS2}, \texttt{PS3}, \texttt{PS4}.\textit{ For example (more \href{https://www.thegeekstuff.com/2008/09/bash-shell-ps1-10-examples-to-make-your-linux-prompt-like-angelina-jolie/}{here}), set }\texttt{PS1}\textit{ to a string like:}\\
+
+\entry{30mm}{\textbackslash u@\textbackslash h \textbackslash w}{user, host, \& WD}\\
+\entry{30mm}{\textbackslash !|\$ str|\textbackslash \$?>}{cmd \#, content of str}\\
+\entry{40mm}{\textbackslash e[0;34m\textbackslash u@\textbackslash h \textbackslash w> \textbackslash e[m}{light blue}\\
+\entry{30mm}{[`myfunc`]>}{run shell fn}\\
+\entry{30mm}{[\textbackslash \$(script.sh)]>}{run shell script}\\

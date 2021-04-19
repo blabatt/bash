@@ -1,0 +1,65 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Emacs Mode}
+\textit{The default command-line editor; change with:}\\
+\entry{35mm}{set -o vi}{\dots to vi editor}\\
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Character Movement / Editing}
+\begin{tabular}{l  l}
+    ctrl-b      & back one char \\
+    ctrl-f      & forward one char \\
+    del         & delete one char back \\
+    ctrl-d      & delete one char forward \\
+\end{tabular}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Word Movement / Editing}
+\begin{tabular}{l  l}
+    esc-b       & move one word back \\
+    esc-f       & move one word forward \\
+    esc-del     & kill one word back \\
+    esc-ctrl-h  & kill one word back \\
+    esc-d       & kill one word forward \\
+    ctrl-y      & yank last item killed 
+\end{tabular}
+\\[7mm] %%% this is a kludge to keep above list from falling
+%%%%%%%%%%% off the bottom of the page...
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Line and History Commands}
+\begin{tabular}{l  l}
+    ctrl-a      & move to line begin \\
+    ctrl-f      & move to end of line \\
+    ctrl-k      & kill to end of line \\
+    ctrl-p      & move up line \\
+    ctrl-n      & move to next line \\
+    ctrl-r      & search backward \\
+    esc-<       & move to 1st hist line \\
+    esc->       & move to last hist line \\
+    esc-?       & expand all choices \\ 
+\end{tabular}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Completion Commmands}
+\begin{tabular}{l  l}
+    <tab>       & general text completion \\
+    esc-?       & expand all choices \\ 
+    esc-/       & filename completion \\
+    ctrl-x      & list filename possibilities \\
+    esc-\textasciitilde     & username completion \\
+    ctrl-x \textasciitilde  & list username possibilities \\
+    esc-\$      & attempt variable completion \\
+    ctrl-x \$   & list possible variables \\
+    esc-@       & attempt hostname completion \\
+    ctrl-x @    & list hostname possibilities \\
+    esc-!       & attempt command completion \\
+    ctrl-x !    & list possible commands \\
+    esc-<tab>   & attempt completion from hist \\
+\end{tabular}
+
+

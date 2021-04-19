@@ -1,0 +1,26 @@
+\section{Command-line Args}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Positional Parameters}
+\textit{\say{Positional parameters} (}\texttt{\$1}, \texttt{\$2}, \dots\textit{) hold passed parameters; while }\texttt{\#}\textit{ holds \# of params and }\texttt{*}\textit{, }\texttt{@}\textit{ hold all params (in a string, array, respectively). For manual parsing, }\textbf{shift}\textit{ pops the top of the positional parameter stack. Use }\textbf{getops}\textit{ for complex parsing (eg, multiple options, not all required).}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{\href{https://stackoverflow.com/questions/16483119/an-example-of-how-to-use-getopts-in-bash}{getopts}}
+\code{getopts <options\_list> <option>}\\
+\textbf{getopts}\textit{ assigns each successive command-line argument to }\texttt{<option>}\textit{. }\texttt{<options\_list>}\textit{ describes available options: assign a letter for each, separated by colons, with an optional first colon to override default }\textbf{getopts}\textit{ error msg. If an option has an argument, }\textbf{getopts}\textit{ will store the current one in }\texttt{OPTARG}. \\ %} Iterate through each option by conditioning a loop upon }\textbf{getops}\textit{ (no }\textbf{shift}\textit{ required). 
+\code{while getopts \textquotedbl :a:b:C\textquotedbl\, opt ; do}\\
+\code{\phantom{\quad}case \$opt in}\\
+\code{\phantom{\quad\quad}a ) <stmt>}\\
+\code{\phantom{\quad\quad}\textbackslash ? ) echo \textquotedbl usage\textquotedbl ; exit 1 ;;}\\
+\code{esac ; done}\\
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{eval}
+\textbf{eval}\textit{ affords dynamic creation of shell commands. Eg, programmatically create a pipeline by storing each step into a string, then }\textbf{eval}\textit{ing it:}\\
+\code{eval \$convert \$file \$scale \$border > \$outfile}
+

@@ -1,0 +1,108 @@
+\section{Flow Control}
+\textit{Executed commands run in a subshell; called functions block and run in the same shell. Use }\textbf{return <int>}\textit{ to exit immediately encapsulating function, or }\textbf{exit <int>}\textit{ to exit script. Loops admit the usual }\textbf{break}\textit{ syntax.}\\
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Conditions}
+
+\textit{Success or failure of a command, via its exit status, is sufficient to implement a condition (}\texttt{<cond>}\textit{) below. though }\textbf{test}\textit{ is often used instead. Form logical combinations of }\texttt{<cond>}\textit{s using ORs (}\texttt{||}\textit{) and ANDs (}\texttt{\&\&}\textit{), or }\textbf{test}\textit{\textquotesingle s }\textbf{-o}, \textbf{-a}\textit{ flags, respectively. Negate phrases with exclamation (}\textbf{!}\textit{):}\\
+\entry{37mm}{if [<cond>] \&\& [<cond>]}{ANDed <cond>s}\\
+\entry{37mm}{if [<cond> -a <cond>]}{sole ANDed \textbf{test}}\\
+\entry{33mm}{if [ -x \textquotedbl \$1\textquotedbl -a ! -d \textquotedbl \$1\textquotedbl]}{idiom: is executable}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Test Command}
+\textbf{test}\textit{ evaluates an expression. The results, in the form of \ul{exit statuses}, are ubiquitously used in flow-control statements, as a means of implementing a more general condition (}\texttt{<cond>}\textit{). Sadly, an exit status of 0 is a \say{success}; 1 or other is a \say{failure}. [\dots] is a shorthand for }\textbf{test}\textit{, and the following options control the evaluation:}
+\begin{tabular}{l l l l}
+    -b      & is block dev      & -c    & is char dev       \\
+    -c      & is dir            & -e    & exists            \\
+    -f      & is regular        & -g    & setfid set        \\
+    -G      & owned by grp      & -k    & sticky bit set    \\
+    -L      & is sym link       & -n    & str non-null      \\
+    -O      & owned by usr      & -p    & is pipe           \\
+    -r      & is readable       & -s    & is non-empty      \\
+    -S      & is a socket       & -t \textit{n}    & \textit{n} points to term     \\
+    -u      & setuid bit        & -w    & writeable         \\
+    -x      & executable
+\end{tabular} 
+
+\textit{Can also use comparison operators }\texttt{=}, \texttt{!=}, \texttt{<}, \texttt{>}, \texttt{<=}, \texttt{>=}, \texttt{==}\textit{, the first four of which can be used with strings or numerics; or exclusively numeric comparison operators }\textbf{-lt}, \textbf{-le}, \textbf{-eq}, \textbf{-ge}, \textbf{-gt}, \textbf{-ne}\textit{, as well as } \texttt{+}, \texttt{-}, \texttt{*}, \texttt{/}, \texttt{\%}, \texttt{<{}<}, \texttt{>{}>}, \texttt{\$}, \texttt{|}, \texttt{\textasciitilde}, \texttt{!}, \texttt{\textasciicircum}\textit{ . {\color{red}Warning:} use double quotes for }\textbf{[-n \textquotedbl\$<var>\textquotedbl]}\textit{ tests, as empty strings otherwise still succeed!}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{If / Else}
+
+\entry{25mm}{if <cond>}{<cond> is often a \code{\textbf{test}}}\\
+\entry{25mm}{then}{idiom: append to prev line}\\
+\code{\phantom{\quad}<statemt>*}\\
+\entry{25mm}{elif <cond>}{optional as usual}\\
+\code{\phantom{\quad}<statemt>*}\\
+\entry{25mm}{else}{optional as well}\\
+\code{\phantom{\quad}<statemt>*}\\
+\entry{25mm}{fi}{requires new line}\\
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{For}
+
+\entry{26mm}{for <i> in <list>}{<i> used only in loop}\\
+\entry{26mm}{do}{requires n.l. (or for ; do)}\\
+\entry{26mm}{\phantom{\quad}<statemt>*}{can now use <i>}\\
+\entry{26mm}{done}{requires new line}\\
+
+\textit{Eg, iterate }\texttt{PATH}\textit{ or files in }\texttt{.}\textit{ using:}\\
+\code{IFS=: ; for dir in \$PATH; do ls -ld \$dir; done}\\
+\code{for f in \$(ls -1); do}\\
+
+\textit{Newer bash versions afford a \say{numeric for,} which approximates traditional }\texttt{for}\textit{ loops:}\\
+\code{for (( <init> ;          <end> ; <update> )); do \dots}\\
+\code{for (( i=1 \hspace{3ex}; i<=12 \hspace{1ex}; i++ \phantom{xxxxx} )); do \dots}\\
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Case}
+
+\entry{25mm}{case <expr> in}{<expr> is a string}\\
+\entry{25mm}{\phantom{\quad}<ptrn> )}{<ptrn> is another string}\\
+\entry{25mm}{\phantom{\quad\quad}<stmt>* ;;}{note double ; to end}\\
+\entry{25mm}{\phantom{\quad}<ptrn> )}{as many cases as needed}\\
+\entry{25mm}{\phantom{\quad\quad}<stmt>* ;;}{}\\
+\entry{28mm}{\phantom{\quad}<ptrn>|<ptrn> )}{log\textquotesingle ly ORed <ptrn>s}\\
+\entry{25mm}{\phantom{\quad\quad}<stmt>* ;;}{}\\
+\entry{25mm}{\phantom{\quad}* )}{optional \say{catch-all} case}\\
+\entry{25mm}{\phantom{\quad\quad}<stmt>* ;;}{}\\
+\entry{25mm}{esac}{on its own line}\\
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Select}
+\textit{A higher-level interface for implementing menus. Alternatively, can elicit input more manually using lower-level }\href{https://linuxhint.com/bash\_read\_command/}{\textbf{read}}\textit{ invocations. Note: idiomatically, user-prompts write to STDERR.}\\
+\entry{33mm}{select <sel> in <list>}{options from <list>}\\
+\entry{33mm}{do}{on own line}\\
+\entry{33mm}{\phantom{\quad}<stmt>*}{can now use <sel>}\\
+\entry{33mm}{done}{on own line}\\
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{While / Until}
+
+\entry{27mm}{while <cond> ; do}{<cond> tests exit status}\\
+\entry{27mm}{\phantom{\quad}<stmt>*}{}\\
+\entry{27mm}{done}{}\\
+
+\entry{27mm}{until <cmd>; do}{do while <cmd> fails}\\
+\entry{27mm}{\phantom{\quad}<stmt>*}{}\\
+\entry{27mm}{done}{}\\
+
+\code{echo ``\$var'' | while IFS= read -r ln ; do \dots ; done}\\
+
+\textit{Eg, expand on previous }\texttt{PATH}\textit{ iteration:}\\
+\code{path=\$PATH ; while [ \$path ] ; }\\
+\code{do ls -ld \$\{path\%\%:*\}; path=\$\{path\#*:\} ; done}\\
+
+\textit{Eg, process command-line args without getopts:}\\
+\code{while [ -n \textquotedbl \$(echo \$1 | grep \textquotesingle \textquotesingle')\textquotedbl] ;}\\
+\code{do \dots ; shift ; done }\\

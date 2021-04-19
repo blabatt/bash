@@ -1,0 +1,27 @@
+\section{Input / Output Processing}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Examples / Idioms}
+
+\entry{34mm}{\textquotedbl \$@\textquotedbl > logfile > 2>\&1 \&}{bg job; err, out to log}\\
+\entry{34mm}{\textquotedbl \$@\textquotedbl  | tee logfile \&}{ibid (synonym)}\\
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Synopsis}
+
+
+\begin{tabular}{@{}l l l l}
+    |           & pipe          & >             & std out  \\
+    <           & std in        & >{}>          & append out \\
+    >|          & force out     & \textit{n}>|  & force to \textit{n} \\
+    <>          & in \& out     & \textit{n}<>  & in, out to \textit{n} \\
+    <{}<        & \say{here doc} & \textit{n}>  & out to FD \textit{n} \\
+    <\textit{n} & FD in \textit{n} & \textit{n}>{}> & FD append \textit{n} \\ 
+    \textit{n}>\&  & dup out    & \textit{n}<\& & dup in, FD \textit{n} \\
+    \textit{n}>\&\textit{m} & \textit{n} follows \textit{m} & \textit{n}<\&\textit{m} & \textit{n} follows \textit{m}  \\
+    \&>         & out \& err    & <\&-     & close std in \\
+    >\&-        & close s-out   & \textit{n}>\&- & close \textit{n}-out \\
+\end{tabular}
